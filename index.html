@@ -1,0 +1,187 @@
+
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Biuro turystyczne</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+    <h1>Rezerwacja wycieczek</h1>
+</header>
+
+<main>
+    <nav>
+        <button type="button" id="przyciskUczestnik"
+                onclick="uczestnika()">Uczestnik</button>
+        <button type="button" id="przyciskRezerwacja"
+                onclick="rezerwacji()">Rezerwacja</button>
+    </nav>
+
+    <section id="daneKlienta">
+        <h2>Dane Klienta</h2>
+
+        <img src="osoba.png" alt="Klient">
+
+        <p>
+            <label for="imie">Imię</label>
+            <input type="text" id="imie">
+        </p>
+
+        <p>
+            <label for="nazwisko">Nazwisko</label>
+            <input type="text" id="nazwisko">
+        </p>
+
+        <p><a href="wycieczki.html">Do strony głównej</a></p>
+    </section>
+
+    <section id="daneRezerwacji">
+        <h2>Dane rezerwacji</h2>
+
+        <span onclick="poprzedniaWycieczka()">&#10094;</span>
+
+        <img id="zdjecieWycieczki" src="1.jpg" alt="wycieczka">
+
+        <span onclick="nastepnaWycieczka()">&#10095;</span>
+
+        <h4 id="nazwaMiasta">Barcelona</h4>
+
+        <p>
+            <label for="liczbaOsob">Liczba osób:</label>
+            <input type="number" id="liczbaOsob"
+                   min="1" max="4" value="2" disabled>
+        </p>
+
+        <p>
+            <label for="miejsceWylotu">Miejsce wylotu:</label>
+            <select id="miejsceWylotu" disabled>
+                <option>Warszawa</option>
+                <option>Kraków</option>
+                <option>Wrocław</option>
+            </select>
+        </p>
+
+        <p>
+            <input type="radio" id="sniadania" name="wyzywienie"
+                   checked disabled>
+            <label for="sniadania">Śniadania</label>
+        </p>
+
+        <p>
+            <input type="radio" id="obiadokolacje" name="wyzywienie"
+                   disabled>
+            <label for="obiadokolacje">
+                Śniadania i obiadokolacje
+            </label>
+        </p>
+
+        <p>
+            <input type="radio" id="allInclusive" name="wyzywienie"
+                   disabled>
+            <label for="allInclusive">All inclusive</label>
+        </p>
+
+        <button type="button" id="sprawdzCene" disabled>
+            Sprawdź cenę
+        </button>
+    </section>
+
+    <aside>
+        <img src="1.jpg" alt="wycieczki">
+        <img src="2.jpg" alt="wycieczki">
+        <img src="3.jpg" alt="wycieczki">
+        <img src="1.jpg" alt="wycieczki">
+        <img src="2.jpg" alt="wycieczki">
+        <img src="3.jpg" alt="wycieczki">
+        <img src="1.jpg" alt="wycieczki">
+        <img src="2.jpg" alt="wycieczki">
+        <img src="3.jpg" alt="wycieczki">
+    </aside>
+</main>
+
+<footer>
+    <p>Autor strony: <em>000000</em></p>
+</footer>
+
+<script>
+    const przyciskUczestnik =
+        document.getElementById("przyciskUczestnik");
+    const przyciskRezerwacja =
+        document.getElementById("przyciskRezerwacja");
+
+    const daneKlienta = document.getElementById("daneKlienta");
+    const daneRezerwacji =
+        document.getElementById("daneRezerwacji");
+
+    const zdjecieWycieczki =
+        document.getElementById("zdjecieWycieczki");
+    const nazwaMiasta = document.getElementById("nazwaMiasta");
+
+    const wycieczki = [
+        { obraz: "1.jpg", miasto: "Barcelona" },
+        { obraz: "2.jpg", miasto: "Rzym" },
+        { obraz: "3.jpg", miasto: "Londyn" }
+    ];
+
+    let indeksWycieczki = 0;
+
+    function ustawAktywnosc(sekcja, aktywna) {
+        const kontrolki = sekcja.querySelectorAll("input, select, button");
+
+        kontrolki.forEach(function (kontrolka) {
+            kontrolka.disabled = !aktywna;
+        });
+    }
+
+    function uczestnika() {
+        przyciskUczestnik.style.backgroundColor = "DodgerBlue";
+        przyciskRezerwacja.style.backgroundColor = "SkyBlue";
+
+        ustawAktywnosc(daneKlienta, true);
+        ustawAktywnosc(daneRezerwacji, false);
+    }
+
+    function rezerwacji() {
+        przyciskUczestnik.style.backgroundColor = "SkyBlue";
+        przyciskRezerwacja.style.backgroundColor = "DodgerBlue";
+
+        ustawAktywnosc(daneKlienta, false);
+        ustawAktywnosc(daneRezerwacji, true);
+    }
+
+    function wyswietlWycieczke() {
+        zdjecieWycieczki.src = wycieczki[indeksWycieczki].obraz;
+        nazwaMiasta.textContent = wycieczki[indeksWycieczki].miasto;
+    }
+
+    function poprzedniaWycieczka() {
+        indeksWycieczki--;
+
+        if (indeksWycieczki < 0) {
+            indeksWycieczki = wycieczki.length - 1;
+        }
+
+        wyswietlWycieczke();
+    }
+
+    function nastepnaWycieczka() {
+        indeksWycieczki++;
+
+        if (indeksWycieczki >= wycieczki.length) {
+            indeksWycieczki = 0;
+        }
+
+        wyswietlWycieczke();
+    }
+    przyciskUczestnik.style.backgroundColor = "DodgerBlue";
+    przyciskRezerwacja.style.backgroundColor = "SkyBlue";
+
+    ustawAktywnosc(daneKlienta, true);
+    ustawAktywnosc(daneRezerwacji, false);
+</script>
+
+</body>
+</html>
